@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.inad.pokemongame.R
@@ -37,11 +39,12 @@ fun PokemonGameScreen() {
         modifier = Modifier.fillMaxSize(),
         topBar = { PokemonTopAppBar() }
     ) {
+        val pokemonViewModel: PokemonViewModel = viewModel(factory = PokemonViewModel.Factory)
         Surface(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            PokemonScreen(contentPadding = it)
+            PokemonScreen(pokemonViewModel.pokemonUiState, contentPadding = it)
         }
     }
 
@@ -57,21 +60,33 @@ fun PokemonTopAppBar(modifier: Modifier = Modifier) {
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineSmall,
             )
-        }, modifier = modifier
+        }, modifier = modifier,
+        //colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        //    containerColor = MaterialTheme.colorScheme.primary,
+        //    titleContentColor = MaterialTheme.colorScheme.onPrimary
+        //)
     )
 }
 
 @Composable
 fun PokemonScreen(
+    pokemonUiState: PokemonUiState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    Column(modifier = modifier
-        .padding(top = contentPadding.calculateTopPadding(), start = 16.dp, end = 16.dp, bottom = 16.dp)
-        .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceAround) {
+    Column(
+        modifier = modifier
+            .padding(
+                top = contentPadding.calculateTopPadding(),
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp
+            )
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
         Text(
-            text = "¿Quién es este Pokémon?",
+            text = stringResource(R.string.who_is),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             modifier = modifier.fillMaxWidth()

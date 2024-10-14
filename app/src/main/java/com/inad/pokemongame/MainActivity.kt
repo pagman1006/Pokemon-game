@@ -16,9 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PokemonGameTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    PokemonGameScreen()
-                }
+                PokemonGameScreen()
             }
         }
     }
