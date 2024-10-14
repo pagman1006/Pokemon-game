@@ -64,8 +64,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Retrofit
     implementation(libs.retrofit)
-    // Retrofit with Scalar Converter
-    //implementation(libs.converter.scalars)
 
     // Kotlin serialization
     implementation(libs.kotlinx.serialization.json)
